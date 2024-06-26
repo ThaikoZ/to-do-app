@@ -15,5 +15,5 @@ class Task(models.Model):
   is_flagged = models.BooleanField(default=False)
   deadline_date = models.DateTimeField(null=True, blank=True)
   created_at = models.DateTimeField(auto_now_add=True)
-  # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+  user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
   
