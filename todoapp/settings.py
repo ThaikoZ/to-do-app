@@ -28,10 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'core.User'
-
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -153,3 +149,5 @@ DJOSER = {
         'rest_framework.permissions.IsAuthenticated'
     ]
 }
+
+AUTH_USER_MODEL = 'core.User'

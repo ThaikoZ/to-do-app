@@ -8,6 +8,7 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 djangorestframework = "*"
 django-filter = "*"
+drf-nested-routers = "*"
 
 [dev-packages]
 
