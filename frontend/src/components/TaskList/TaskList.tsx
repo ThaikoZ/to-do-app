@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import ListItem from "./ListItem";
-import { useEffect, useState } from "react";
-import { Task } from "../../utils/task";
+import { useEffect } from "react";
 import { useTaskContext } from "../../context/ListItemContext";
 
 const tasksData = [
@@ -48,9 +47,11 @@ const TaskList = ({ className }: Props) => {
 
   return (
     <ol className={classnames(className, "flex flex-col gap-5")}>
-      {tasks.map((_, index) => (
-        <ListItem key={index} index={index} />
-      ))}
+      {tasks.length ? (
+        tasks.map((_, index) => <ListItem key={index} index={index} />)
+      ) : (
+        <div className="flex justify-center pt-5">No more things to do</div>
+      )}
     </ol>
   );
 };

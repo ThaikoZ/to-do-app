@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { useTaskContext } from "../context/ListItemContext";
+import { useTaskContext } from "../../context/ListItemContext";
 
 interface Props {
   className?: string;

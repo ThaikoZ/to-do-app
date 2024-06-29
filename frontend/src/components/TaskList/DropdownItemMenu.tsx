@@ -29,6 +29,9 @@ const DropdownItemMenu = ({ index }: Props) => {
           <DropdownMenu.Label className="px-3 font-regular text-sm text-primary-200 pb-1">
             Options
           </DropdownMenu.Label>
+          <DropdownMenu.Item className={classNames(dropdownItemClass, "")}>
+            Show
+          </DropdownMenu.Item>
           <DropdownMenu.Item
             className={classNames(dropdownItemClass, "")}
             onClick={() => switchStatus(index)}
