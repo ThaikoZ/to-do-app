@@ -1,6 +1,6 @@
 import Button from "../Button";
 import NavMenu from "../NavMenu";
-import TaskList from "../TaskList/TaskList";
+import TaskList from "./TaskList/TaskList";
 import { TaskProvider } from "../../context/ListItemContext";
 import { PlusCircleIcon } from "../../icons";
 import Header from "../Header";

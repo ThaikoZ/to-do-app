@@ -1,6 +1,6 @@
-import { LinkIcon, ChatIcon, CalendarIcon } from "../../icons";
-import DotDivider from "../DotDivider";
-import { useTaskContext } from "../../context/ListItemContext";
+import { LinkIcon, ChatIcon, CalendarIcon } from "../../../icons";
+import DotDivider from "../../DotDivider";
+import { useTaskContext } from "../../../context/ListItemContext";
 
 const ItemDetails = ({ index }: { index: number }) => {
   const { tasks } = useTaskContext();

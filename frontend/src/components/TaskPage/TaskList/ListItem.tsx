@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import Checkbox from "./Checkbox";
-import { FlagIcon } from "../../icons";
+import { FlagIcon } from "../../../icons";
 import DropdownItemMenu from "./DropdownItemMenu";
-import { useTaskContext } from "../../context/ListItemContext";
+import { useTaskContext } from "../../../context/ListItemContext";
 import ItemDetails from "./ItemDetails";
 
 interface Props {
