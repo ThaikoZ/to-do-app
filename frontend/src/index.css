@@ -1,68 +1,53 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --color-primary-100: 247, 247, 247; /* #f7f7f7 */
+    --color-primary-200: 156, 150, 184; /* #9c96b8 */
+    --color-primary-500: 97, 97, 255; /* #6161ff */
+    --color-primary-600: 77, 77, 255; /* #4d4dff */
+    --color-primary-900: 53, 40, 113; /* #352871 */
   }
-  a:hover {
-    color: #747bff;
+
+  body {
+    box-sizing: border-box;
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+@layer components {
+  .custom-checkbox {
+    appearance: none;
+    background-color: #fff;
+    border: 2px solid #9c96b8;
+    box-shadow: 0 0 0 1px #d1d5db;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .custom-checkbox:checked {
+    background-color: #6161ff;
+    border-color: #3b82f6;
+  }
+
+  .custom-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M6.00008 10.8001L3.20008 8.0001L2.33341 8.86677L6.00008 12.5334L14.0001 4.53343L13.1334 3.66676L6.00008 10.8001Z" /%3E%3C/svg%3E');
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 }
