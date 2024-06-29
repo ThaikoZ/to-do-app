@@ -3,7 +3,8 @@ import DotDivider from "../components/DotDivider";
 import Header from "../components/Header";
 import NavMenu from "../components/NavMenu";
 import TaskList from "../components/TaskList/TaskList";
-import { TaskProvider } from "../context/TaskListContext";
+import { TaskProvider } from "../context/ListItemContext";
+
 import { PlusCircleIcon } from "../icons";
 
 const TaskPage = () => {
@@ -40,7 +41,9 @@ const TaskPage = () => {
               </Button>
             </div>
           </div>
-          <TaskList className="w-full" />
+          <TaskProvider>
+            <TaskList className="w-full" />
+          </TaskProvider>
         </div>
       </div>
       <div className="bg-gray-200">d</div>

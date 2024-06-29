@@ -5,9 +5,9 @@ import { Task } from "../utils/task";
 interface TaskContextType {
   tasks: Task[];
   setTasks: (tasks: Task[]) => void;
-  addTask: (task: Task) => void;
   removeTask: (index: number) => void;
   switchFlag: (index: number) => void;
+  switchStatus: (index: number) => void;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -23,8 +23,15 @@ export const useTaskContext = () => {
 export const TaskProvider = ({ children }: PropsWithChildren) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const addTask = (task: Task) => {
-    setTasks([...tasks, task]);
+  const switchStatus = (index: number) => {
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks];
+      updatedTasks[index] = {
+        ...updatedTasks[index],
+        status: updatedTasks[index].status == "DONE" ? "UNDO" : "DONE",
+      };
+      return updatedTasks;
+    });
   };
 
   const removeTask = (index: number) => {
@@ -33,11 +40,15 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     setTasks(newTasks);
   };
 
-  // TODO: SetFlagg
   const switchFlag = (index: number) => {
-    let newTasks = tasks;
-    newTasks[index].isFlagged = !newTasks[index].isFlagged;
-    setTasks(newTasks);
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks];
+      updatedTasks[index] = {
+        ...updatedTasks[index],
+        isFlagged: !updatedTasks[index].isFlagged,
+      };
+      return updatedTasks;
+    });
   };
 
   // TODO: Set Date
@@ -45,9 +56,9 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
   const contextValue: TaskContextType = {
     tasks,
     setTasks,
-    addTask,
     removeTask,
     switchFlag,
+    switchStatus,
   };
 
   return (

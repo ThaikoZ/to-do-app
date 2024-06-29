@@ -2,10 +2,12 @@ import classnames from "classnames";
 import ListItem from "./ListItem";
 import { useEffect, useState } from "react";
 import { Task } from "../../utils/task";
+import { useTaskContext } from "../../context/ListItemContext";
 
 const tasksData = [
   {
     id: 1,
+    status: "TODO",
     title: "Code Review",
     links: 4,
     comments: 12,
@@ -14,6 +16,7 @@ const tasksData = [
   },
   {
     id: 2,
+    status: "TODO",
     title: "Meetings with Ragazo Company",
     links: 4,
     comments: 12,
@@ -22,6 +25,7 @@ const tasksData = [
   },
   {
     id: 3,
+    status: "DONE",
     title: "Documenting on Github and trying to ",
     links: 0,
     comments: 0,
@@ -35,40 +39,17 @@ interface Props {
 }
 
 const TaskList = ({ className }: Props) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const { tasks, setTasks } = useTaskContext();
 
   useEffect(() => {
     // axios connect
     setTasks(tasksData);
   }, []);
 
-  const removeTask = (index: number) => {
-    const newTasks = [...tasks];
-    newTasks.splice(index, 1);
-    setTasks(newTasks);
-  };
-
-  const switchFlag = (index: number) => {
-    setTasks((prevTasks) => {
-      const updatedTasks = [...prevTasks];
-      updatedTasks[index] = {
-        ...updatedTasks[index],
-        isFlagged: !updatedTasks[index].isFlagged,
-      };
-      return updatedTasks;
-    });
-  };
-
   return (
     <ol className={classnames(className, "flex flex-col gap-5")}>
-      {tasks.map((task, index) => (
-        <ListItem
-          key={index}
-          task={task}
-          index={index}
-          onDelete={removeTask}
-          onChangeFlag={switchFlag}
-        />
+      {tasks.map((_, index) => (
+        <ListItem key={index} index={index} />
       ))}
     </ol>
   );

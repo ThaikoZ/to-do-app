@@ -1,26 +1,21 @@
-import { useState } from "react";
 import classnames from "classnames";
+import { useTaskContext } from "../context/ListItemContext";
 
 interface Props {
   className?: string;
+  index: number;
 }
 
-const Checkbox = ({ className }: Props) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const onChangeHandle = () => {
-    setIsChecked(!isChecked);
-  };
+const Checkbox = ({ className, index }: Props) => {
+  const { tasks, switchStatus } = useTaskContext();
 
   return (
-    <>
-      <input
-        type="checkbox"
-        onChange={onChangeHandle}
-        checked={isChecked}
-        className={classnames(className, "custom-checkbox  transition colors")}
-      />
-    </>
+    <input
+      type="checkbox"
+      onChange={() => switchStatus(index)}
+      checked={tasks[index].status == "DONE"}
+      className={classnames(className, "custom-checkbox  transition colors")}
+    />
   );
 };
 
