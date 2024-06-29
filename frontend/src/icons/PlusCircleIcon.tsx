@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { Props } from "./index.ts";
 
-const LinkIcon = ({ className }: Props) => {
+const PlusCircleIcon = ({ className }: Props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,10 +15,10 @@ const LinkIcon = ({ className }: Props) => {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
       />
     </svg>
   );
 };
 
-export default LinkIcon;
+export default PlusCircleIcon;

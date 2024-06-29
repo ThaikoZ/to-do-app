@@ -3,15 +3,22 @@ import classNames from "classnames";
 
 interface Props {
   className?: string;
+  h?: 1 | 2;
   children: ReactNode;
 }
 
-const Header = ({ className, children }: Props) => {
+const headerMap = {
+  1: "text-[2rem]",
+  2: "text-[1.45rem]",
+};
+
+const Header = ({ className, h, children }: Props) => {
   return (
     <h1
       className={classNames(
         className,
-        "text-[1.45rem] font-medium pb-4 text-primary-900"
+        headerMap[h || 2],
+        " font-medium pb-4 text-primary-900"
       )}
     >
       {children}

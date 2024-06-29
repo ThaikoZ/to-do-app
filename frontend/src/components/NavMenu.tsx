@@ -7,6 +7,7 @@ const NavMenu = () => {
     <ul className="flex gap-6 pb-5 text-lg font-medium text-primary-200">
       {navMenu.map((title, index) => (
         <li
+          key={title}
           className={classnames(
             { "text-primary-600": index == 0 },
             "cursor-pointer hover:text-primary-600 transition-colors"

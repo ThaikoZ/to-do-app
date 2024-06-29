@@ -12,7 +12,7 @@ const Button = ({ children, classNames, onClick }: Props) => {
     <div
       className={classnames(
         classNames,
-        "py-2.5 px-5 bg-zinc-900 rounded-lg text-white cursor-pointer hover:bg-zinc-800 active:bg-zinc-900"
+        "flex gap-2 px-3 py-2.5  bg-primary-500 h-fit w-fit rounded-xl text-white cursor-pointer font-regular hover:bg-primary-600 active:bg-primary-500 "
       )}
       onClick={onClick}
     >
