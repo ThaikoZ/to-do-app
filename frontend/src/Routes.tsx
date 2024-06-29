@@ -3,12 +3,12 @@ import NoPage from "./pages/NoPage";
 import RegisterPage from "./pages/RegisterPage";
 import SignInPage from "./pages/SignInPage";
 import TaskPage from "./pages/TaskPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes as RouterRoutes, Route } from "react-router-dom";
 
-function App() {
+function Routes() {
   return (
     <BrowserRouter>
-      <Routes>
+      <RouterRoutes>
         <Route path="/" element={<Layout />}>
           <Route index element={<TaskPage />} />
           <Route path="tasks" element={<TaskPage />} />
@@ -18,9 +18,9 @@ function App() {
           <Route path="login" element={<SignInPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>
-      </Routes>
+      </RouterRoutes>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default Routes;

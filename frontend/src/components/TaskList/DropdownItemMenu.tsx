@@ -1,7 +1,7 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { EllipsisHorizontalIcon } from "../../../icons";
+import { EllipsisHorizontalIcon } from "../../icons";
 import classNames from "classnames";
-import { useTaskContext } from "../../../context/ListItemContext";
+import { useTaskContext } from "../../context/ListItemContext";
 
 interface Props {
   index: number;
