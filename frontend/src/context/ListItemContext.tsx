@@ -28,7 +28,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
       const updatedTasks = [...prevTasks];
       updatedTasks[index] = {
         ...updatedTasks[index],
-        status: updatedTasks[index].status == "DONE" ? "UNDO" : "DONE",
+        status: updatedTasks[index].status == "DONE" ? "TODO" : "DONE",
       };
       return updatedTasks;
     });

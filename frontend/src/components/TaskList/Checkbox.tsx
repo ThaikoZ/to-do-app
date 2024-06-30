@@ -14,7 +14,7 @@ const Checkbox = ({ className, index }: Props) => {
       type="checkbox"
       onChange={() => switchStatus(index)}
       checked={tasks[index].status == "DONE"}
-      className={classnames(className, "custom-checkbox  transition colors")}
+      className={classnames(className, "custom-checkbox transition colors ")}
     />
   );
 };

@@ -2,6 +2,7 @@ export interface Task {
   id: number;
   status: string | "TODO" | "DONE";
   title: string;
+  description: string;
   links?: number;
   comments?: number;
   date?: string;

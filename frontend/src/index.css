@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --color-primary-100: 247, 247, 247; /* #f7f7f7 */
+    --color-primary-125: 232, 235, 239; /*  */
     --color-primary-150: 199, 194, 221; /*  */
     --color-primary-200: 156, 150, 184; /* #9c96b8 */
     --color-primary-500: 97, 97, 255; /* #6161ff */
