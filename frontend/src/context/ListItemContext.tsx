@@ -4,6 +4,8 @@ import { Task } from "../utils/task";
 // Define context type
 interface TaskContextType {
   tasks: Task[];
+  selectedTaskId: number;
+  setSelectedTaskId: (id: number) => void;
   setTasks: (tasks: Task[]) => void;
   removeTask: (index: number) => void;
   switchFlag: (index: number) => void;
@@ -22,6 +24,7 @@ export const useTaskContext = () => {
 
 export const TaskProvider = ({ children }: PropsWithChildren) => {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [selectedTaskId, setSelectedTaskId] = useState<number>(-1);
 
   const switchStatus = (index: number) => {
     setTasks((prevTasks) => {
@@ -59,6 +62,8 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     removeTask,
     switchFlag,
     switchStatus,
+    selectedTaskId,
+    setSelectedTaskId,
   };
 
   return (

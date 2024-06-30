@@ -11,19 +11,32 @@ interface Props {
 }
 
 const ListItem = ({ index }: Props) => {
-  const { tasks, switchFlag, removeTask } = useTaskContext();
+  const { tasks, switchFlag, removeTask, setSelectedTaskId } = useTaskContext();
+
+  const handleItemClick = () => {
+    setSelectedTaskId(index);
+  };
+
+  const stopPropagation = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
 
   return (
     <>
-      {tasks[index].status == "TODO" ? (
-        <li className="group flex border-sm rounded-xl p-3 text-white gap-3 outline outline-2 outline-primary-100 cursor-pointer hover:bg-primary-500  hover:border-primary-600 transition-colors overflow-hidden">
-          <div className="flex items-start ">
+      {tasks[index].status === "TODO" ? (
+        <li
+          className={
+            "group flex border-sm rounded-xl p-3 text-white gap-3 outline outline-2 outline-primary-100 cursor-pointer hover:bg-primary-500 hover:border-primary-600 transition-colors overflow-hidden z-0"
+          }
+          onClick={handleItemClick}
+        >
+          <div className="flex items-start" onClick={stopPropagation}>
             <Checkbox
               index={index}
-              className={`mt-[0.2rem] group-hover:bg-primary-500 `}
+              className="mt-[0.2rem] group-hover:bg-primary-500"
             />
           </div>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full" onClick={handleItemClick}>
             <h3 className="font-medium text-primary-900 text-lg group-hover:text-white">
               {tasks[index].title}
             </h3>
@@ -31,7 +44,10 @@ const ListItem = ({ index }: Props) => {
             <ItemDetails index={index} />
           </div>
 
-          <div className="flex gap-3 items-start pe-0.5 pt-0.5">
+          <div
+            className="flex gap-3 items-start pe-0.5 pt-0.5"
+            onClick={stopPropagation}
+          >
             <div onClick={() => switchFlag(index)}>
               <FlagIcon
                 className={classNames(
@@ -39,7 +55,7 @@ const ListItem = ({ index }: Props) => {
                     "fill-rose-500 group-hover:fill-white":
                       tasks[index].isFlagged,
                   },
-                  " stroke-rose-500 w-5"
+                  "stroke-rose-500 w-5"
                 )}
               />
             </div>
@@ -49,11 +65,11 @@ const ListItem = ({ index }: Props) => {
           </div>
         </li>
       ) : (
-        <li className="group flex border-sm rounded-xl p-3 bg-primary-100 text-white gap-3 outline outline-2 outline-primary-100  transition-colors overflow-hidden ">
-          <div className="flex items-start ">
+        <li className="group flex border-sm rounded-xl p-3 bg-primary-100 text-white gap-3 outline outline-2 outline-primary-100 transition-colors overflow-hidden">
+          <div className="flex items-start" onClick={stopPropagation}>
             <Checkbox
               index={index}
-              className={`mt-[0.2rem] group-hover:bg-primary-500 `}
+              className="mt-[0.2rem] group-hover:bg-primary-500"
             />
           </div>
           <div className="flex flex-col w-full">
@@ -62,8 +78,11 @@ const ListItem = ({ index }: Props) => {
             </h3>
           </div>
           <div
-            className="flex items-center pe-1 "
-            onClick={() => removeTask(index)}
+            className="flex items-center pe-1"
+            onClick={(event) => {
+              stopPropagation(event);
+              removeTask(index);
+            }}
           >
             <TrashIcon className="stroke-rose-500 hover:stroke-rose-500 w-5 cursor-pointer hover:fill-rose-500 hover:stroke-rose-500" />
           </div>

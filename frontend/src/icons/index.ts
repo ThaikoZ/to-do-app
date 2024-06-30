@@ -9,6 +9,7 @@ export { default as MenuIcon } from "./MenuIcon";
 export { default as StackIcon } from "./StackIcon";
 export { default as TrashIcon } from "./TrashIcon";
 export { default as InboxIcon } from "./InboxIcon";
+export { default as CloseIcon } from "./CloseIcon";
 
 export interface Props {
   className?: string;
