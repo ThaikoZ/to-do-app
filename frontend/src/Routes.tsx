@@ -1,3 +1,4 @@
+import AuthGuard from "./components/AuthGuard";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -9,10 +10,12 @@ function Routes() {
   return (
     <BrowserRouter>
       <RouterRoutes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<TaskPage />} />
-          <Route path="tasks" element={<TaskPage />} />
-          <Route path="*" element={<NoPage />} />
+        <Route path="/" element={<AuthGuard />}>
+          <Route element={<Layout />}>
+            <Route index element={<TaskPage />} />
+            <Route path="tasks" element={<TaskPage />} />
+            <Route path="*" element={<NoPage />} />
+          </Route>
         </Route>
         <Route path="/auth/">
           <Route path="login" element={<SignInPage />} />

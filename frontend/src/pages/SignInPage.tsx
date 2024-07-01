@@ -1,16 +1,40 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
+import axiosInstance from "../services/api-client";
+import { useNavigate } from "react-router-dom";
+
+interface Token {
+  access: string;
+  refresh: string;
+}
 
 const SignInPage = () => {
-  const emailRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const [error, setError] = useState();
+  const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const onSubmitHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const emailValue = emailRef.current!.value;
+    const usernameValue = usernameRef.current!.value;
     const passwordValue = passwordRef.current!.value;
 
-    console.log({ email: emailValue, password: passwordValue });
+    const payload = { username: usernameValue, password: passwordValue };
+    console.log(payload);
+
+    axiosInstance
+      .post<Token>("auth/jwt/create/", payload)
+      .then((res) => {
+        localStorage.setItem("session_token_refresh", res.data.refresh);
+        localStorage.setItem("session_token_access", res.data.access);
+        navigate("/tasks");
+      })
+      .catch((err) => {
+        console.log(err);
+        const result = err.response.data.detail;
+        console.log(result);
+        setError(result);
+      });
   };
   return (
     <>
@@ -35,18 +59,18 @@ const SignInPage = () => {
           >
             <div>
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                Username
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  ref={emailRef}
-                  autoComplete="email"
+                  id="username"
+                  name="username"
+                  type="username"
+                  ref={usernameRef}
+                  autoComplete="username"
                   required
                   className="ps-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
                 />
@@ -74,7 +98,9 @@ const SignInPage = () => {
                 />
               </div>
             </div>
-
+            {error && (
+              <p className=" text-center text-rose-500 py-0">{error}</p>
+            )}
             <div>
               <button
                 type="submit"
