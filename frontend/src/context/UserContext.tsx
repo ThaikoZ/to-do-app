@@ -37,19 +37,7 @@ export const UserProvider = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("session_token_access");
-        if (!token) {
-          throw new Error("No token found in localStorage");
-        }
-
-        // Set authorization header properly
-        const config = {
-          headers: {
-            Authorization: `JWT ${token}`,
-          },
-        };
-
-        const response = await axiosInstance.get("/auth/users/me/", config);
+        const response = await axiosInstance.get("/auth/users/me/");
         setUser(response.data);
       } catch (error) {
         setUser(null);

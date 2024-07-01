@@ -8,109 +8,8 @@ import TaskDetails from "./TaskDetails";
 import { useTaskContext } from "../../context/ListItemContext";
 import { useEffect } from "react";
 import classNames from "classnames";
-
-const tasksData = [
-  {
-    id: 1,
-    status: "TODO",
-    title: "Code Review",
-    description: "Check all the files",
-    links: 4,
-    comments: 12,
-    date: "22 Jan 2023",
-    isFlagged: false,
-  },
-  {
-    id: 2,
-    status: "TODO",
-    title: "Meetings with Ragazo Company",
-    description: "Meet with a guys",
-    links: 4,
-    comments: 12,
-    date: "22 Apr 2023",
-    isFlagged: true,
-  },
-  {
-    id: 3,
-    status: "DONE",
-    title: "Documenting on Github and trying to ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-  {
-    id: 4,
-    status: "DONE",
-    title: "Pogadać z Julcią ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-  {
-    id: 4,
-    status: "DONE",
-    title: "Pogadać z Julcią ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-  {
-    id: 4,
-    status: "DONE",
-    title: "Pogadać z Julcią ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-  {
-    id: 4,
-    status: "DONE",
-    title: "Pogadać z Julcią ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-  {
-    id: 4,
-    status: "DONE",
-    title: "Pogadać z Julcią ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-  {
-    id: 4,
-    status: "DONE",
-    title: "Pogadać z Julcią ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-  {
-    id: 4,
-    status: "DONE",
-    title: "Pogadać z Julcią ",
-    description: "Push to Github",
-    links: 0,
-    comments: 0,
-    date: "",
-    isFlagged: false,
-  },
-];
+import axiosInstance from "../../services/api-client";
+import { convertDBTasksToTasks } from "../../utils/task";
 
 const TasksDashboard = () => {
   const {
@@ -123,8 +22,19 @@ const TasksDashboard = () => {
   } = useTaskContext();
 
   useEffect(() => {
-    // axios connect
-    setTasks(tasksData);
+    const fetchTasks = async () => {
+      try {
+        const response = await axiosInstance.get("/app/tasks");
+        const newTasks = convertDBTasksToTasks(response.data.results);
+        setTasks(newTasks);
+        console.log(newTasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        setTasks([]);
+      }
+    };
+
+    fetchTasks();
   }, []);
 
   const getCurrentDate = () => {

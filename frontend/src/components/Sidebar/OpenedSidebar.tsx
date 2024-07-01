@@ -20,7 +20,7 @@ const OpenedSidebar = ({ navItems, switchOpenHandle }: Props) => {
             <div className="flex items-center justify-center text-white  rounded-full h-8 w-8 bg-rose-500">
               {`${user?.first_name[0] || user?.username[0]}`.toUpperCase()}
             </div>
-            <div className="text-primary-900">
+            <div className="text-primary-900 overflow-hidden">
               {user?.first_name || user?.username}'s Space
             </div>
           </div>
