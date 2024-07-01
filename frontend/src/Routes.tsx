@@ -5,16 +5,19 @@ import RegisterPage from "./pages/RegisterPage";
 import SignInPage from "./pages/SignInPage";
 import TaskPage from "./pages/TaskPage";
 import { BrowserRouter, Routes as RouterRoutes, Route } from "react-router-dom";
+import { UserProvider } from "./context/UserContext";
 
 function Routes() {
   return (
     <BrowserRouter>
       <RouterRoutes>
         <Route path="/" element={<AuthGuard />}>
-          <Route element={<Layout />}>
-            <Route index element={<TaskPage />} />
-            <Route path="tasks" element={<TaskPage />} />
-            <Route path="*" element={<NoPage />} />
+          <Route element={<UserProvider />}>
+            <Route element={<Layout />}>
+              <Route index element={<TaskPage />} />
+              <Route path="tasks" element={<TaskPage />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
           </Route>
         </Route>
         <Route path="/auth/">

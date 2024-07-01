@@ -2,6 +2,7 @@ import { MenuIcon } from "../../icons";
 import DialogBox from "./DialogBox";
 import classNames from "classnames";
 import { NavItem } from "./Sidebar";
+import { useUserContext } from "../../context/UserContext";
 
 interface Props {
   navItems: NavItem[];
@@ -9,15 +10,19 @@ interface Props {
 }
 
 const OpenedSidebar = ({ navItems, switchOpenHandle }: Props) => {
+  const { user } = useUserContext();
+
   return (
     <div className="hidden md:flex flex-col min-w-[275px] max-w-[275px] bg-primary-100 justify-between p-7 ">
       <div>
         <div className="flex justify-between bg-white h-12 px-2 rounded-xl shadow-[0_1px_20px_0px_rgba(0,0,0,0.02)]">
           <div className="flex items-center justify-center gap-2 font-medium">
             <div className="flex items-center justify-center text-white  rounded-full h-8 w-8 bg-rose-500">
-              A
+              {`${user?.first_name[0] || user?.username[0]}`.toUpperCase()}
             </div>
-            <div className="text-primary-900">{"Admin"}'s Space</div>
+            <div className="text-primary-900">
+              {user?.first_name || user?.username}'s Space
+            </div>
           </div>
           <div
             className="flex items-center w-6 my-3 cursor-pointer hover:bg-primary-100 rounded-md active:bg-white"
