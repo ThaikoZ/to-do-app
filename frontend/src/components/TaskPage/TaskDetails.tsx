@@ -1,38 +1,69 @@
 import Header from "../Header";
-import { ChatIcon, CloseIcon, LinkIcon } from "../../icons";
-import { useTaskContext } from "../../context/ListItemContext";
+import { ChatIcon, LinkIcon } from "../../icons";
+import classNames from "classnames";
+import { useState } from "react";
+import { Task } from "../../utils/task";
 
-const TaskDetails = () => {
-  const { tasks, selectedTaskId, setSelectedTaskId } = useTaskContext();
+interface Props {
+  className?: string;
+  task: Task;
+  hide: () => void;
+  setTask: (task: Task) => void;
+}
 
-  if (tasks.length == 0 || selectedTaskId < 0) {
-    setSelectedTaskId(-1);
-    return;
-  }
+const TaskDetails = ({ className, task, hide, setTask }: Props) => {
+  const [inputs, setInputs] = useState(task);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setTask(inputs);
+    hide();
+  };
 
   return (
-    <div className="row-span-2 col-span-8 lg:col-span-3 w-full p-7 border-t-[1px] lg:border-t-none lg:border-s-[1px] lg:h-[100vh]">
+    <form
+      onSubmit={handleSubmit}
+      className={classNames(
+        className,
+        "bg-white  p-7 border-t-[1px] lg:border-t-none lg:border-s-[1px] lg:h-[100vh]"
+      )}
+    >
       <div className="flex justify-between  mb-5 items-center">
         <Header className="pb-0" h={2}>
           Task Details
         </Header>
 
-        <div
-          className="cursor-pointer hover:bg-primary-100 rounded-lg flex items-center"
-          onClick={() => setSelectedTaskId(-1)}
+        <button
+          type="submit"
+          className="cursor-pointer hover:bg-primary-100 rounded-lg flex items-center p-2 font-medium text-primary-900"
         >
-          <CloseIcon className="w-6" />
-        </div>
+          Save
+        </button>
       </div>
       <div className="px-4 py-3 border-[1px] w-full rounded-xl">
         <div className="pb-7">
           <p className="text-primary-200 text-sm pb-2">My Work Task</p>
-          <Header className="pb-1.5" h={2}>
-            {tasks[selectedTaskId].title}
-          </Header>
-          <p className="text-primary-900">
-            {tasks[selectedTaskId].description}
-          </p>
+          <input
+            onChange={handleChange}
+            type="text"
+            name="title"
+            className="bg-none outline-none border-none font-medium text-[1.45rem] text-primary-900 w-full placeholder:text-primary-900"
+            placeholder={"Title"}
+            value={inputs.title}
+          />
+          <input
+            onChange={handleChange}
+            type="text"
+            name="description"
+            className="bg-none outline-none border-none  text-primary-900 w-full placeholder:text-primary-900"
+            placeholder={"Description"}
+            value={inputs.description}
+          />
         </div>
         <div className="flex gap-5 text-[1.05rem]">
           <div className="flex flex-col gap-3 text-primary-150  ">
@@ -42,7 +73,7 @@ const TaskDetails = () => {
             <p>Type</p>
           </div>
           <div className="flex flex-col gap-3 text-primary-900 font-medium">
-            <p>{tasks[selectedTaskId].date || "-- --- ----"}</p>
+            <p>{task.date || "-- --- ----"}</p>
             <p>09:30</p>
             <p>Admin</p>
             <p>Daily Task</p>
@@ -61,7 +92,7 @@ const TaskDetails = () => {
           </h2>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

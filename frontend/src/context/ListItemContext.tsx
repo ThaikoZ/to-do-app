@@ -7,6 +7,8 @@ interface TaskContextType {
   selectedTaskId: number;
   setSelectedTaskId: (id: number) => void;
   setTasks: (tasks: Task[]) => void;
+  setTask: (tasks: Task) => void;
+  addTask: () => void;
   removeTask: (index: number) => void;
   switchFlag: (index: number) => void;
   switchStatus: (index: number) => void;
@@ -26,6 +28,30 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedTaskId, setSelectedTaskId] = useState<number>(-1);
 
+  const addTask = () => {
+    const newTask: Task = {
+      id: 4,
+      status: "TODO",
+      title: "",
+      description: "",
+      links: 0,
+      comments: 0,
+      date: "",
+      isFlagged: false,
+    };
+
+    setTasks([newTask, ...tasks]);
+    setSelectedTaskId(0);
+  };
+
+  const setTask = (task: Task) => {
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks];
+      updatedTasks[selectedTaskId] = task;
+      return updatedTasks;
+    });
+  };
+
   const switchStatus = (index: number) => {
     setTasks((prevTasks) => {
       const updatedTasks = [...prevTasks];
@@ -38,6 +64,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
   };
 
   const removeTask = (index: number) => {
+    if (index == selectedTaskId) setSelectedTaskId(-1);
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
     setTasks(newTasks);
@@ -59,6 +86,8 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
   const contextValue: TaskContextType = {
     tasks,
     setTasks,
+    setTask,
+    addTask,
     removeTask,
     switchFlag,
     switchStatus,

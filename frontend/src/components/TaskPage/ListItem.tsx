@@ -40,7 +40,9 @@ const ListItem = ({ index }: Props) => {
             <h3 className="font-medium text-primary-900 text-lg group-hover:text-white">
               {tasks[index].title}
             </h3>
-            <p className="text-primary-200 pb-1">{tasks[index].description}</p>
+            <p className="text-primary-200 pb-1 group-hover:text-white">
+              {tasks[index].description}
+            </p>
             <ItemDetails index={index} />
           </div>
 

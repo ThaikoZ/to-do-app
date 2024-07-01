@@ -40,10 +40,87 @@ const tasksData = [
     date: "",
     isFlagged: false,
   },
+  {
+    id: 4,
+    status: "DONE",
+    title: "Pogadać z Julcią ",
+    description: "Push to Github",
+    links: 0,
+    comments: 0,
+    date: "",
+    isFlagged: false,
+  },
+  {
+    id: 4,
+    status: "DONE",
+    title: "Pogadać z Julcią ",
+    description: "Push to Github",
+    links: 0,
+    comments: 0,
+    date: "",
+    isFlagged: false,
+  },
+  {
+    id: 4,
+    status: "DONE",
+    title: "Pogadać z Julcią ",
+    description: "Push to Github",
+    links: 0,
+    comments: 0,
+    date: "",
+    isFlagged: false,
+  },
+  {
+    id: 4,
+    status: "DONE",
+    title: "Pogadać z Julcią ",
+    description: "Push to Github",
+    links: 0,
+    comments: 0,
+    date: "",
+    isFlagged: false,
+  },
+  {
+    id: 4,
+    status: "DONE",
+    title: "Pogadać z Julcią ",
+    description: "Push to Github",
+    links: 0,
+    comments: 0,
+    date: "",
+    isFlagged: false,
+  },
+  {
+    id: 4,
+    status: "DONE",
+    title: "Pogadać z Julcią ",
+    description: "Push to Github",
+    links: 0,
+    comments: 0,
+    date: "",
+    isFlagged: false,
+  },
+  {
+    id: 4,
+    status: "DONE",
+    title: "Pogadać z Julcią ",
+    description: "Push to Github",
+    links: 0,
+    comments: 0,
+    date: "",
+    isFlagged: false,
+  },
 ];
 
 const TasksDashboard = () => {
-  const { setTasks, selectedTaskId } = useTaskContext();
+  const {
+    tasks,
+    setTasks,
+    selectedTaskId,
+    setSelectedTaskId,
+    addTask,
+    setTask,
+  } = useTaskContext();
 
   useEffect(() => {
     // axios connect
@@ -60,40 +137,60 @@ const TasksDashboard = () => {
     return currentDate;
   };
 
+  const hidePanel = () => {
+    setSelectedTaskId(-1);
+  };
+
   return (
-    <div className="grid grid-cols-8 w-full ">
+    <div className="grid grid-cols-8">
       <div
         className={classNames(
-          { "lg:col-span-5": selectedTaskId != -1 },
-          "row-span-1 col-span-8  flex justify-center w-full selection:bg-none pb-10"
+          {
+            "h-[45vh] overflow-y-auto lg:h-full lg:col-span-5 lg:overflow-visible no-scrollbar":
+              selectedTaskId != -1,
+          },
+          "col-span-8 overflow-x-hidden w-full "
         )}
       >
-        <div className="flex-col w-full min-w-[475px] max-w-[900px] pt-10 ">
-          <div className="shadow-sm px-7 border-primary-100 ">
-            <div className="flex items-center gap-3 pb-2 text-primary-800">
-              General <DotDivider /> Todo
-            </div>
-            <Header className="pb-5" h={1}>
-              Todo
-            </Header>
-          </div>
-          <div className="px-7 pt-7">
-            <div className="flex justify-between">
-              <div>
-                <Header>{getCurrentDate()}</Header>
-                <NavMenu />
+        <div
+          className={classNames(
+            "row-span-1 col-span-8  flex justify-center w-full selection:bg-none pb-10"
+          )}
+        >
+          <div className="flex-col w-full min-w-[475px] max-w-[900px] pt-10 ">
+            <div className="shadow-sm px-7 border-primary-100 ">
+              <div className="flex items-center gap-3 pb-2 text-primary-800">
+                General <DotDivider /> Todo
               </div>
-              <div className="flex items-center">
-                <Button>
-                  <PlusCircleIcon className="w-6 stroke-white" /> New Task
-                </Button>
-              </div>
+              <Header className="pb-5" h={1}>
+                Todo
+              </Header>
             </div>
-            <TaskList className="w-full" />
+            <div className="px-7 pt-7">
+              <div className="flex justify-between">
+                <div>
+                  <Header>{getCurrentDate()}</Header>
+                  <NavMenu />
+                </div>
+                <div className="flex items-center">
+                  <Button onClick={addTask}>
+                    <PlusCircleIcon className="w-6 stroke-white" /> New Task
+                  </Button>
+                </div>
+              </div>
+              <TaskList className="w-full" />
+            </div>
           </div>
         </div>
       </div>
-      <TaskDetails />
+      {!(tasks.length == 0 || selectedTaskId < 0 || !tasks[selectedTaskId]) && (
+        <TaskDetails
+          task={tasks[selectedTaskId]}
+          hide={hidePanel}
+          setTask={setTask}
+          className="row-span-2 col-span-8 lg:col-span-3 lg:sticky lg:top-0"
+        />
+      )}
     </div>
   );
 };

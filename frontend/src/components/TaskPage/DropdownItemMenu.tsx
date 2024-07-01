@@ -11,7 +11,8 @@ const dropdownItemClass =
   "hover:bg-primary-100 w-40 px-3 h-10 flex items-center cursor-pointer active:bg-white outline-none font-regular";
 
 const DropdownItemMenu = ({ index }: Props) => {
-  const { tasks, removeTask, switchStatus } = useTaskContext();
+  const { tasks, removeTask, switchStatus, setSelectedTaskId } =
+    useTaskContext();
 
   return (
     <DropdownMenu.Root>
@@ -29,7 +30,10 @@ const DropdownItemMenu = ({ index }: Props) => {
           <DropdownMenu.Label className="px-3 font-regular text-sm text-primary-200 pb-1">
             Options
           </DropdownMenu.Label>
-          <DropdownMenu.Item className={classNames(dropdownItemClass, "")}>
+          <DropdownMenu.Item
+            className={classNames(dropdownItemClass, "")}
+            onClick={() => setSelectedTaskId(index)}
+          >
             Show
           </DropdownMenu.Item>
           <DropdownMenu.Item
