@@ -24,12 +24,23 @@ export const convertDBTasksToTasks = (dbTasks: DB_Task[]): Task[] => {
     status:
       dbTask.status === "TODO" || dbTask.status === "DONE"
         ? dbTask.status
-        : "TODO", // Ensure status is either 'TODO' or 'DONE'
+        : "TODO",
     title: dbTask.title,
     description: dbTask.description,
-    links: undefined, // You can set default values or leave them undefined if they are optional
+    links: undefined,
     comments: undefined,
     date: undefined,
-    isFlagged: dbTask.is_flagged, // Rename is_flagged to isFlagged
+    isFlagged: dbTask.is_flagged,
   }));
+};
+
+export const convertTaskToDBTask = (task: Task): DB_Task => {
+  return {
+    id: task.id,
+    status: task.status,
+    title: task.title,
+    description: task.description,
+    is_flagged: task.isFlagged ?? false,
+    deadline_date: null,
+  };
 };

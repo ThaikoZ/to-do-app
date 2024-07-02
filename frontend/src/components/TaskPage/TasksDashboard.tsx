@@ -12,14 +12,8 @@ import axiosInstance from "../../services/api-client";
 import { convertDBTasksToTasks } from "../../utils/task";
 
 const TasksDashboard = () => {
-  const {
-    tasks,
-    setTasks,
-    selectedTaskId,
-    setSelectedTaskId,
-    addTask,
-    setTask,
-  } = useTaskContext();
+  const { tasks, setTasks, selectedTaskId, hidePanel, addTask, setTask } =
+    useTaskContext();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -45,10 +39,6 @@ const TasksDashboard = () => {
     const currentDate = `Today, ${day} ${capitalizedMonth}`;
 
     return currentDate;
-  };
-
-  const hidePanel = () => {
-    setSelectedTaskId(-1);
   };
 
   return (

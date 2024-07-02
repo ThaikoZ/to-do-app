@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { Task } from "../utils/task";
+import axiosInstance from "../services/api-client";
 
 // Define context type
 interface TaskContextType {
@@ -12,6 +13,7 @@ interface TaskContextType {
   removeTask: (index: number) => void;
   switchFlag: (index: number) => void;
   switchStatus: (index: number) => void;
+  hidePanel: () => void;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -30,7 +32,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
 
   const addTask = () => {
     const newTask: Task = {
-      id: 4,
+      id: -1,
       status: "TODO",
       title: "",
       description: "",
@@ -53,14 +55,21 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
   };
 
   const switchStatus = (index: number) => {
+    const status = tasks[index].status == "DONE" ? "TODO" : "DONE";
     setTasks((prevTasks) => {
       const updatedTasks = [...prevTasks];
       updatedTasks[index] = {
         ...updatedTasks[index],
-        status: updatedTasks[index].status == "DONE" ? "TODO" : "DONE",
+        status: status,
       };
       return updatedTasks;
     });
+
+    const payload = { status: status };
+
+    axiosInstance
+      .patch(`/app/tasks/${tasks[index].id}/`, payload)
+      .catch((err) => console.error(err));
   };
 
   const removeTask = (index: number) => {
@@ -68,17 +77,32 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
     setTasks(newTasks);
+
+    axiosInstance
+      .delete(`/app/tasks/${tasks[index].id}/`)
+      .catch((err) => console.error(err));
   };
 
   const switchFlag = (index: number) => {
+    const isFlagged = !tasks[index].isFlagged;
     setTasks((prevTasks) => {
       const updatedTasks = [...prevTasks];
       updatedTasks[index] = {
         ...updatedTasks[index],
-        isFlagged: !updatedTasks[index].isFlagged,
+        isFlagged: isFlagged,
       };
       return updatedTasks;
     });
+
+    const payload = { is_flagged: isFlagged };
+
+    axiosInstance
+      .patch(`/app/tasks/${tasks[index].id}/`, payload)
+      .catch((err) => console.error(err));
+  };
+
+  const hidePanel = () => {
+    setSelectedTaskId(-1);
   };
 
   // TODO: Set Date
@@ -93,6 +117,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     switchStatus,
     selectedTaskId,
     setSelectedTaskId,
+    hidePanel,
   };
 
   return (

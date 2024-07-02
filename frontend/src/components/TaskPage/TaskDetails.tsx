@@ -3,6 +3,8 @@ import { ChatIcon, LinkIcon } from "../../icons";
 import classNames from "classnames";
 import { useState } from "react";
 import { Task } from "../../utils/task";
+import axiosInstance from "../../services/api-client";
+import { useUserContext } from "../../context/UserContext";
 
 interface Props {
   className?: string;
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const TaskDetails = ({ className, task, hide, setTask }: Props) => {
+  const { user } = useUserContext();
   const [inputs, setInputs] = useState(task);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,10 +22,26 @@ const TaskDetails = ({ className, task, hide, setTask }: Props) => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTask(inputs);
-    hide();
+
+    if (inputs == task) {
+      hide();
+      return;
+    }
+
+    try {
+      let response;
+      if (task.id === -1) {
+        response = await axiosInstance.post("/app/tasks/", inputs);
+      } else {
+        response = await axiosInstance.patch(`/app/tasks/${task.id}/`, inputs);
+      }
+      setTask(response.data);
+      hide();
+    } catch (error) {
+      console.error("Error updating/creating task:", error);
+    }
   };
 
   return (
@@ -75,7 +94,7 @@ const TaskDetails = ({ className, task, hide, setTask }: Props) => {
           <div className="flex flex-col gap-3 text-primary-900 font-medium">
             <p>{task.date || "-- --- ----"}</p>
             <p>09:30</p>
-            <p>Admin</p>
+            <p>{user?.username || ""}</p>
             <p>Daily Task</p>
           </div>
         </div>
