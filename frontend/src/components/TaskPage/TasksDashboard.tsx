@@ -10,10 +10,12 @@ import { useEffect } from "react";
 import classNames from "classnames";
 import axiosInstance from "../../services/api-client";
 import { convertDBTasksToTasks } from "../../utils/task";
+import { useUserContext } from "../../context/UserContext";
 
 const TasksDashboard = () => {
   const { tasks, setTasks, selectedTaskId, hidePanel, addTask, setTask } =
     useTaskContext();
+  const { logout } = useUserContext();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -59,12 +61,22 @@ const TasksDashboard = () => {
         >
           <div className="flex-col w-full min-w-[475px] max-w-[900px] pt-10 ">
             <div className="shadow-sm px-7 border-primary-100 ">
-              <div className="flex items-center gap-3 pb-2 text-primary-800">
-                General <DotDivider /> Todo
+              <div className="flex justify-between">
+                <div>
+                  <div className="flex items-center gap-3 pb-2 text-primary-800">
+                    General <DotDivider /> Todo
+                  </div>
+                  <Header className="pb-5" h={1}>
+                    Todo
+                  </Header>
+                </div>
+                <div
+                  className="cursor-pointer px-3 py-2 bg-primary-500 text-white hover:bg-primary-600 size-fit rounded-xl"
+                  onClick={logout}
+                >
+                  Logout
+                </div>
               </div>
-              <Header className="pb-5" h={1}>
-                Todo
-              </Header>
             </div>
             <div className="px-7 pt-7">
               <div className="flex justify-between">

@@ -15,6 +15,7 @@ export interface UserData {
 interface UserContextType {
   user: UserData | null;
   setUser: (userData: UserData | null) => void;
+  logout: () => void;
 }
 
 // Create context with initial value
@@ -48,9 +49,16 @@ export const UserProvider = () => {
     fetchUser();
   }, []); // Fetch user data on component mount
 
+  const logout = () => {
+    localStorage.removeItem("session_token_access");
+    localStorage.removeItem("session_token_refresh");
+    navigate("/");
+  };
+
   const contextValue: UserContextType = {
     user,
     setUser,
+    logout,
   };
 
   return (
